@@ -25,9 +25,9 @@ app.get("/currencies/:symbol", getCurrencyBySymbol);
 
 app.get("/users", getUsers); //Returns all the user data
 
-app.get("/users/:uuid", getUserById); //Returns the user object by finding the user based on login.uuid
-
 app.get("/users/search", searchUsers); // ?gender=<string>&age=<number> → Returns the users filtered on the basis of gender and/or age
+
+app.get("/users/:uuid", getUserById); //Returns the user object by finding the user based on login.uuid
 
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
