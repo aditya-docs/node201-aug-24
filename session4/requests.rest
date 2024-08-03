@@ -1,0 +1,24 @@
+GET http://localhost:8082
+Authorization: LetMeIn
+###
+GET http://localhost:8082/currencies
+###
+GET http://localhost:8082/currencies?min_value=1
+###
+GET http://localhost:8082/currencies/inr
+###
+GET http://localhost:8082/users
+Authorization: LetMeIn
+###
+GET http://localhost:8082/users/6607d086-719-4c26-beb1-280c9f9cbf35
+###
+GET http://localhost:8082/users/search?age=male
+###
+GET http://localhost:8082/users/search?gender=50
+###
+GET http://localhost:8082/users/search?q=%7B%22gender%22:%20%22male%22,%20%22age%22:%2049%7D
+###
+GET http://localhost:8082/users/search?gender=female&age=-1
+Authorization: LetMeIn
+###
+GET http://localhost:8082/users/search
