@@ -2,10 +2,14 @@ const getQueryErrors = require("../validations/userSearch.validation");
 const usersJson = require("../users.json");
 
 const getUsers = (req, res) => {
+  if (req.headers.authorization !== process.env.password)
+    return res.sendStatus(403);
   res.send(usersJson.data);
 };
 
 const getUserById = (req, res) => {
+  if (req.headers.authorization !== process.env.password)
+    return res.sendStatus(403);
   const { uuid } = req.params;
   const reqUser = usersJson.data.find((user) => user.login.uuid === uuid);
   if (reqUser) return res.send(reqUser);
@@ -15,6 +19,8 @@ const getUserById = (req, res) => {
 };
 
 const searchUsers = (req, res) => {
+  if (req.headers.authorization !== process.env.password)
+    return res.sendStatus(403);
   const { gender, age } = req.query;
 
   const { error } = getQueryErrors({ gender, age });

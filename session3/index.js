@@ -1,5 +1,7 @@
 const express = require("express");
-
+require("dotenv").config();
+// const dotenv = require("dotenv")
+// dotenv.config();
 const currencyRouter = require("./routes/currencies.routes");
 const userRouter = require("./routes/users.routes");
 const app = express();
