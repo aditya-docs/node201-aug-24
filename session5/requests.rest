@@ -22,3 +22,26 @@ GET http://localhost:8082/users/search?gender=female&age=-1
 Authorization: LetMeIn
 ###
 GET http://localhost:8082/users/search
+###
+POST http://localhost:8082/blogs/new
+Content-Type: application/json
+
+{   
+    "title": "one more blog",
+    "authors": "aditya",
+    "content": 50,
+    "publishedAt": null
+}
+###
+GET http://localhost:8082/blogs
+###
+GET http://localhost:8082/blogs/66b3a818cee53442c2db036f
+###
+PATCH http://localhost:8082/blogs/66b3a07aa77d9a1bc4e16c08
+Content-Type: application/json
+
+{   
+    "title": "very cool blog"
+}
+###
+DELETE http://localhost:8082/blogs/66b3a07aa77d9a1bc4e16c08
