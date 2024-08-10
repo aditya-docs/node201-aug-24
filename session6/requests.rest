@@ -27,9 +27,14 @@ POST http://localhost:8082/blogs/new
 Content-Type: application/json
 
 {   
-    "title": "Travel blog on Snowdonia",
-    "content": "snowdon",
-    "authors": ["john"]
+    "title": "Travel blog on Manali",
+    "content": "manali",
+    "authors": [{
+        "fullName": "john doe",
+        "twitterHandle": "jdoe_vlogger",
+        "email": "jdoe@gmail.com",
+        "image": "https://igmcdn.com/profile/1123546513.jpg"
+    }]
 }
 ###
 GET http://localhost:8082/blogs
@@ -44,3 +49,11 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:8082/blogs/66b3a07aa77d9a1bc4e16c08
+###
+GET http://localhost:8082/blogs/search?title=dist
+###
+GET http://localhost:8082/blogs/search?author=jdoe@bbc.co.uk
+###
+GET http://localhost:8082/blogs/search?author=jdoe@bbc.co.uk&title=lake
+###
+GET http://localhost:8082/blogs/search

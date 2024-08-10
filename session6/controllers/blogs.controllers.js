@@ -1,10 +1,10 @@
-const Blog = require("../models/blog.model");
+const BlogService = require("../services/blog.service");
+const BlogServiceInstance = new BlogService();
 
 const createNewBlog = async (req, res) => {
   try {
-    const newBlog = new Blog(req.body);
-    await newBlog.save();
-    // const newBlog = await Blog.create(req.body);
+    const newBlog = BlogServiceInstance.create(req.body);
+    await BlogServiceInstance.save(newBlog);
     res.status(201).send(newBlog);
   } catch (error) {
     if (error.name === "ValidationError")
@@ -15,7 +15,8 @@ const createNewBlog = async (req, res) => {
 
 const getAllBlogs = async (req, res) => {
   try {
-    res.send(await Blog.find({}));
+    res.send(await BlogServiceInstance.getAll());
+    // getAll().then(result => res.send(result))
   } catch (error) {
     res.status(500).send({ message: "Something went wrong", error });
   }
@@ -33,10 +34,10 @@ const getBlogById = async (req, res) => {
 
 const updateBlogById = async (req, res) => {
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
-      // returnDocument: "after",
-      new: true,
-    });
+    const updatedBlog = await BlogServiceInstance.updateById(
+      req.params.id,
+      req.body
+    );
     res.send(updatedBlog);
   } catch (error) {
     res.status(500).send({ message: "Something went wrong", error });
@@ -45,9 +46,25 @@ const updateBlogById = async (req, res) => {
 
 const deleteBlogById = async (req, res) => {
   try {
-    await Blog.findByIdAndDelete(req.params.id);
+    await BlogServiceInstance.deleteById(req.params.id);
     res.sendStatus(204);
     // res.send({ message: "Deleted sucessfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Something went wrong", error });
+  }
+};
+
+const searchBlogs = async (req, res) => {
+  const { title, author } = req.query;
+
+  try {
+    if (title && author)
+      return res.send(
+        await BlogServiceInstance.searchByTitleAndAuthor(title, author)
+      );
+    if (title) return res.send(await BlogServiceInstance.searchByTitle(title));
+    if (author)
+      return res.send(await BlogServiceInstance.searchByAuthor(author));
   } catch (error) {
     res.status(500).send({ message: "Something went wrong", error });
   }
@@ -59,4 +76,5 @@ module.exports = {
   getBlogById,
   updateBlogById,
   deleteBlogById,
+  searchBlogs,
 };
