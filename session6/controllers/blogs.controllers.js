@@ -49,7 +49,16 @@ const deleteBlogById = async (req, res) => {
     await BlogServiceInstance.deleteById(req.params.id);
     res.sendStatus(204);
     // res.send({ message: "Deleted sucessfully" });
+
+    //returnin promise example
+
+    // const response = new Promise((resolve, reject) => {
+    //   if (2 === "2") return resolve("equal");
+    //   throw new Error("error");
+    // });
+    // res.status(200).json(response);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Something went wrong", error });
   }
 };

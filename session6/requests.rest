@@ -48,7 +48,7 @@ Content-Type: application/json
     "content": "very cool blog"
 }
 ###
-DELETE http://localhost:8082/blogs/66b3a07aa77d9a1bc4e16c08
+DELETE http://localhost:8082/blogs/66b7a6dadb8e3cfae2a34b48
 ###
 GET http://localhost:8082/blogs/search?title=dist
 ###

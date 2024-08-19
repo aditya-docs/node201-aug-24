@@ -15,8 +15,10 @@ const authorSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      validate: (value) => validator.isURL(value, { protocols: ["https"] }),
-      message: (value) => `${value} is not a valid URL!`,
+      validate: {
+        validator: (value) => validator.isURL(value, { protocols: ["https"] }),
+        message: (value) => `${value} is not a valid URL!`,
+      },
     },
   },
   { _id: false }
