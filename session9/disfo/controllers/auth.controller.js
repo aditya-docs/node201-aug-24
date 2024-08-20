@@ -18,12 +18,21 @@ const postSignup = async (req, res) => {
 const postLogin = async (req, res) => {
   try {
     const { isLoggedIn, userId } = await AuthServiceInstance.login(req.body);
-    if (isLoggedIn) return res.send({ isLoggedIn, userId });
+    if (isLoggedIn)
+      return res
+        .cookie("rememberUserToken", AuthServiceInstance.generateJwt(userId), {
+          maxAge: 30000,
+          httpOnly: true,
+          // secure: true, //when your server is deployed using HTTPS
+        })
+        .send({ isLoggedIn, userId });
     res
       .status(401)
       .send({ message: "Either username or password is incorrect" });
   } catch (error) {
-    res.status(500).send({ message: "Something went wrong, try again!" });
+    res
+      .status(500)
+      .send({ message: "Something went wrong, try again!", error });
   }
 };
 

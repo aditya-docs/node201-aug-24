@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const UserService = require("../services/user.service");
 const UserServiceInstance = new UserService();
 
@@ -15,14 +16,29 @@ class AuthService {
 
   login = async ({ username, password }) => {
     const reqUser = await UserServiceInstance.findByUsername(username);
+    if (!(await this.verifyPassword(password, reqUser.password))) {
+      return { isLoggedIn: false };
+    }
     return {
-      isLoggedIn: await this.verifyPassword(password, reqUser.password),
+      isLoggedIn: true,
       userId: reqUser._id,
     };
   };
 
   verifyPassword = (plainTextPassword, hashedPassword) =>
     bcrypt.compare(plainTextPassword, hashedPassword);
+
+  generateJwt = (userId) =>
+    jwt.sign(
+      {
+        userId,
+        // permissions: ["profile:read", "profile:write", "user:read"],
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: 30,
+      }
+    );
 }
 
 module.exports = AuthService;
