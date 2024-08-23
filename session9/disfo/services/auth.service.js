@@ -36,7 +36,7 @@ class AuthService {
       },
       process.env.JWT_SECRET_KEY,
       {
-        expiresIn: 30,
+        expiresIn: "1h",
       }
     );
 }

@@ -21,7 +21,7 @@ const postLogin = async (req, res) => {
     if (isLoggedIn)
       return res
         .cookie("rememberUserToken", AuthServiceInstance.generateJwt(userId), {
-          maxAge: 30000,
+          maxAge: 3600000,
           httpOnly: true,
           // secure: true, //when your server is deployed using HTTPS
         })
