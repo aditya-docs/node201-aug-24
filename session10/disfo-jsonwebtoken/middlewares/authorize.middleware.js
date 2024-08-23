@@ -1,0 +1,24 @@
+const AuthService = require("../services/auth.service");
+const AuthServiceInstace = new AuthService();
+
+// Authorization: "Bearer 138726584723"
+
+const authorize = (req, res, next) => {
+    if(!req.headers.authorization)
+        return res.sendStatus(403)
+    const token = req.headers.authorization.split(" ")[1];
+    try {
+        const { userId } = AuthServiceInstace.verifyJwt(token, process.env.JWT_SECRET_KEY);
+        req.userId = userId
+        next()
+    } catch (error) {
+        console.error(error.name)
+        if(error.name === "JsonWebTokenError")
+            return res.status(403).send({message: 'Invalid JWT'})
+        if(error.name === "TokenExpiredError")
+            return res.status(403).send({message: 'JWT has expired'})
+        res.sendStatus(403)
+    }
+}
+
+module.exports = authorize;

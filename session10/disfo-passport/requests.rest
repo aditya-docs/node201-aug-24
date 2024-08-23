@@ -1,0 +1,19 @@
+POST http://localhost:8082/auth/signup
+Content-Type: application/json
+
+{
+    "email": "byomkesh.bakshi@gmail.com",
+    "username": "byomkesh",
+    "password": "byomkesh@best"
+}
+###
+POST http://localhost:8082/auth/login
+Content-Type: application/json
+
+{
+    "username": "byomkesh",
+    "password": "byomkesh@best"
+}
+###
+GET http://localhost:8082/user/byomkesh
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmMzN2NkMGIwMTU1MTkzMWI3ZTI5ODkiLCJpYXQiOjE3MjQ0MzQxMTcsImV4cCI6MTcyNDQzNDEzN30.thXo7hKm67QrpRuk6sSLh37UzsyvyVMvtVAKR2GcUIg
