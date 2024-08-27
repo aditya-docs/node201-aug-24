@@ -1,15 +1,17 @@
 const AuthService = require("../services/auth.service");
+const UserService = require("../services/user.service");
 const AuthServiceInstace = new AuthService();
-
+const UserServiceInstance = new UserService();
 // Authorization: "Bearer 138726584723"
 
-const authorize = (req, res, next) => {
+const authorize = async (req, res, next) => {
     if(!req.headers.authorization)
         return res.sendStatus(403)
     const token = req.headers.authorization.split(" ")[1];
     try {
         const { userId } = AuthServiceInstace.verifyJwt(token, process.env.JWT_SECRET_KEY);
-        req.userId = userId
+        const user = await UserServiceInstance.findById(userId)
+        req.user = user
         next()
     } catch (error) {
         console.error(error.name)

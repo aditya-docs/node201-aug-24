@@ -11,19 +11,11 @@ class UserService {
     }
   };
 
-  findAll = async () => {
-    const userResult = await Users.find({});
-    return userResult;
-  };
+  findAll = () => Users.find({});
 
-  findByUsername = async (username) => {
-    try {
-      const userResult = await Users.findOne({ username });
-      return userResult;
-    } catch (error) {
-      throw error;
-    }
-  };
+  findByUsername = (username) => Users.findOne({ username });
+
+  findById = (userId) => Users.findById(userId)
 }
 
 module.exports = UserService;
